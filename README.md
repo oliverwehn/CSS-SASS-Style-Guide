@@ -20,6 +20,7 @@ After having been changing code layout, naming convention and file structure of 
 * [Grunticon](https://github.com/filamentgroup/grunticon) helps managing icons and background images for all devices.
 
 ### File Structure
+```
 sass/ 
 | 
 |– base/ 
@@ -63,6 +64,7 @@ css/
 |– styles.min.map        # source map for debugging
 |– ie-fixes.min.css
 |– ie-fixes.min.map
+```
 
 ### Basic Variables
 
