@@ -34,11 +34,11 @@ sass/
 |   ...                  # Etc… 
 | 
 |– helpers/ 
-|   |– _vars.scss        # General Sass vars, grid values, etc.
 |   |– _functions.scss   # Sass functions 
 |   |– _helpers.scss     # Placeholders, etc.
 |   |– _mixins.scss      # Sass mixins
-|   |– _setup.scss       # Setup steps (e.g. Susy grid setup)
+|   |– _setup.scss       # Imports all helpers in the right order
+|   |– _vars.scss        # General Sass vars, grid values, etc.
 | 
 |– layout/               
 |   |– _header.scss      # Header 
@@ -126,22 +126,84 @@ I use some typography-related global vars to easily get to font-size and line-he
 $base-font-size is always the value defined in the current breakpoint layout, $local-font-size is the current font-size value at this point of the document as it was set by with-type-settings().
 
 ```Sass
+$root-font-size: 16px; /* to set root font size and use it for rem calculation */
 $base-font-size: layout-get(default, typography, base-font-size);
 $base-font-size: layout-get(default, typography, base-font-size);
 $local-font-size: $base-font-size;
 $local-line-height: $base-line-height;
 ```
 
-### $susy
+#### $susy
 By passing the “grid” set of the default layout to this variable, we set up the base for grid calculations done by Susy.
 ```Sass
 $susy: layout-get(default, grid);
 ```
 
+### Functions
 
-### Layout Settings
+#### Unit Calculations
+There are three functions to abstract and homogenize basic unit calculations.
+```Sass
+width: calc-pc($px-width, $px-context); /* calculate percentage value */
+font-size: calc-rem($px-value);
+line-height: calc-em($px-value, $px-context);
+```
 
-### Important Functions
+#### Map Accessor Functions
+Functions to access values in nested map structures used for layout settings and colors.
+```Sass
+/**
+ * Accessing layout values
+ */
+$layout: layout-get(default); /* get a complete layout map */
+$layout-value: layout-get($layout, grid, columns); /* get a specific value from a set within a value map */
+$layout-set: layout-get($layout, typography); /* get a set from a layout */
+
+/**
+ * Accessing colors
+ */
+$color-base: color-get(brand);
+$color-dark: color-get(brand, dark);
+```
+
+#### Recursive Map Merging
+```Sass
+$map-merged: map-merge-r($map1, $map2);
+```
+
+### Mixins
+Some really nice helpers I’ve always by my side.
+
+#### icons($name, $sprites[, $class-prefix])
+Generates icon styles based on sprite file and icon map.
+```Sass
+
+$icons-socialmedia: (
+  (facebook, 0),
+  (twitter, 1),
+  (pinterest, 2),
+  (xing, 3),
+  (linkedin, 4),
+  (googleplus, 5)
+);
+@include icons('socialmedia', $icons-socialmedia);
+
+```
+gives you
+```Css
+.icon__facebook, .icon__twitter, .icon__pinterest, .icon__xing, .icon__linkedin, .icon__googleplus {
+  background-image: url(..images/icons__socialmedia.png);
+  background-image: none, url(..images/icons__socialmedia.svg); /* use svg */
+}
+.icon__facebook {
+  background-position: 0% 0;
+}
+.icon__pinterest {
+  background-position: 40% 0;
+}
+…
+```
+
 
 ### Naming Conventions
 Thanks to Sass 3.3 and above it is a pure pleasure to work with the BEM methodology in Sass. 
