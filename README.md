@@ -19,6 +19,54 @@ After having been changing code layout, naming convention and file structure of 
 * [Autoprefixer](https://github.com/ai/autoprefixer) takes care vendor prefixes.
 * [Grunticon](https://github.com/filamentgroup/grunticon) helps managing icons and background images for all devices.
 
+### General Coding Style
+* Root font size is set to 100%, block/module font sizes are set in rem relative to root font size, within font sizes are set in em.
+* Avoid shorthand notation if possible. E.g. use margin-bottom: 1em; instead of margin: 0 0 1em 0;
+* If number values aren’t self-explanatory, lift the secret. Add a comment.
+
+#### Naming Conventions
+Thanks to Sass 3.3 and above it is a pure pleasure to work with the BEM methodology in Sass. 
+Two underscores separate block from element, double hyphen separate block or element from modifier.
+```Sass
+.nav {
+  …
+  &__item {
+    …
+    &--active {
+      …
+    }
+  }
+  &--fixed {
+    …
+  }
+}
+```
+compiling to
+```Css
+.nav {
+  …
+}
+.nav__item {
+  …
+}
+.nav__item--active {
+  …
+}
+.nav--fixed {
+  …
+}
+```
+
+#### Comments
+
+#### Declaration
+
+#### Nesting
+Don’t nest deeper than 3 levels. 
+
+#### Breakpoints
+For dealing with breakpoints and switching between layout settings, there is the use-layout($breakpoint) mixin taking care of it all.
+
 ### File Structure
 ```
 sass/ 
@@ -186,7 +234,7 @@ $icons-socialmedia: (
   (linkedin, 4),
   (googleplus, 5)
 );
-@include icons('socialmedia', $icons-socialmedia);
+@include icons(socialmedia, $icons-socialmedia);
 
 ```
 gives you
@@ -205,52 +253,8 @@ gives you
 ```
 
 
-### Naming Conventions
-Thanks to Sass 3.3 and above it is a pure pleasure to work with the BEM methodology in Sass. 
-Two underscores separate block from element, double hyphen separate block or element from modifier.
-```Sass
-.nav {
-  …
-  &__item {
-    …
-    &--active {
-      …
-    }
-  }
-  &--fixed {
-    …
-  }
-}
-```
-compiling to
-```Css
-.nav {
-  …
-}
-.nav__item {
-  …
-}
-.nav__item--active {
-  …
-}
-.nav--fixed {
-  …
-}
-```
 
-### Comments
 
-### Declaration
-
-### Nesting
-
-### General Coding Style
-* Root font size is set to 100%, block/module font sizes are set in rem relative to root font size, within font sizes are set in em.
-* Avoid shorthand notation if possible. E.g. use margin-bottom: 1em; instead of margin: 0 0 1em 0;
-* If number values aren’t self-explanatory, lift the secret. Add a comment.
-
-### Breakpoints
-For dealing with breakpoints and switching between layout settings, there is the use-layout($breakpoint) mixin taking care of it all.
 
 ### Credits
 Some sources of insight, influence and inspiration that lead me here:
